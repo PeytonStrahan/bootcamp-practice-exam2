@@ -93,54 +93,84 @@ const collection = [
 
 // PROBLEM #1 //
 
-const setDigitalCode = function(){
-   
+const setDigitalCode = function(array, value){
+   for (let i = array.length - 1; i >= 0; i -= 2){
+    array[i].digitalCode = value;
+   }
+   return array;
 };
 
 // PROBLEM #2 //
 
-const filterByGenreTag = function(){
-    
+const filterByGenreTag = function(array, tag){
+    return array.filter(movie => movie.genreTags.includes(tag));
 };
 
 
 
 // PROBLEM #3 //
 
-const filterBySpecialFeatureType = function(){
-    
+const filterBySpecialFeatureType = function(array, type){
+    return array.filter(movie => {
+        return movie.specialFeatures.reduce((acc, current) => {
+            if (current.type === type){
+                acc = true
+            }
+            return acc;
+        }, false);
+    });
 };
 
 
 // PROBLEM #4 //
 
 const getTopSpecialFeature = function(array, title){
-    
+    // base
+    if (array.length === 0){
+        return "no matching title found";
+    }
+    if (array[0].title === title){
+        return `${title} Special Feature: ${array[0].specialFeatures[0].title}`;
+    }
+    // recursion
+    return getTopSpecialFeature(array.slice(1), title);
 };
 
 
 // PROBLEM #5 //
 
-const mapTitles = function(){
-    
+const mapTitles = function(array){
+    return array.map(movie => {
+        return `${movie.title} (${movie.year}) - dir. ${movie.director}`;
+    });
 };
 
 
 
 // PROBLEM #6 //
 
-const mapSpecialFeatures = function(){
-    
+const mapSpecialFeatures = function(array){
+    return array.map(movie => {
+        return movie.specialFeatures.map(feature => {
+            return feature.title;
+        });
+    });
 };
 
 // PROBLEM #7 //
 
-const createNonsenseString = function(){
-    
+const createNonsenseString = function(array, index){
+    return array.reduce((acc, current) => {
+        return acc + current.title[index];
+    }, "");
 };
 
 // PROBLEM #8 //
 
-const getValues = function(){
-    
+const getValues = function(object, props){
+    let outputArr = [];
+    for (let key of props){
+        outputArr.push(object[key]);
+    }
+    return outputArr;
 };
